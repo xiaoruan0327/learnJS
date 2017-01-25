@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>新手引导</title>
+<style type="text/css">
+	* {
+		padding: 0;
+		margin: 0;
+	}
+	html {
+		height: 100%;
+	}
+	a {
+		text-decoration: none;
+		color: #000;
+	}
+	body {
+		height: 100%;
+		background: url(img/newsite.jpg) no-repeat center top;
+	}
+	#mask {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		background-color: #000;
+		opacity: .5;
+		display: none;
+	}
+	#newguide {
+		width: 1150px;
+		height: 100%;
+		position: absolute;
+		left: 50%;
+		margin-left: -575px;
+		display: none;
+	}
+	#newguide .wrap {
+		width: 215px;
+		height: 70px;
+		border: 2px solid yellow;
+	}
+	.step {
+		display: none;
+		width: 350px;
+		height: 210px;
+	}
+	#newguide .next {
+		position: relative;
+		width: 246px;
+		height: 135px;
+		margin-left: 100px;
+		background: url(img/guide.jpg);
+	}
+	#newguide .next a,span {
+		position: absolute;
+		left: 30px;
+		top: 80px;
+		display: inline-block;
+		width: 85px;
+		height: 30px;
+		background-color: blue;
+		line-height: 30px;
+		text-align: center;
+		cursor: pointer;
+	}
+	#newguide span {
+		left: 130px;
+		width: 60px;
+		background-color: tomato;
+	}
+	#newguide img {
+		display: block;
+		position: absolute;
+	}
+	.one {
+		position: absolute;
+		top: 34px;
+		left: 73px;
+	}
+	.two {
+		position: absolute;
+		top: 40px;
+		left: 400px;
+	}
+	.three {
+		position: absolute;
+		top: 300px;
+		left: 150px;
+	}
+	.four {
+		position: absolute;
+		top: 300px;
+		left: 500px;
+	}
+	.five {
+		position: absolute;
+		top: 10px;
+		right: 70px;
+	}
+</style>
+</head>
+
+<body>
+	<div id="mask"></div>
+	<div id="newguide">
+		<div class="step one">
+			<div class="wrap"></div>
+			<div class="next">
+				<a>下一步</a>
+				<span title="关闭">关闭</span>
+			</div>
+		</div>
+		<div class="step two">
+			<div class="wrap"></div>
+			<div class="next">
+				<a>下一步</a>
+				<span title="关闭">关闭</span>
+			</div>
+		</div>
+		<div class="step three">
+			<div class="wrap"></div>
+			<div class="next">
+				<a>下一步</a>
+				<span title="关闭">关闭</span>				
+			</div>
+		</div>
+		<div class="step four">
+			<div class="wrap"></div>
+			<div class="next">
+				<a>下一步</a>
+				<span title="关闭">关闭</span>				
+			</div>
+		</div>
+		<div class="step five">
+			<div class="wrap"></div>
+			<div class="next">
+				<a>下一步</a>
+				<span title="关闭">关闭</span>				
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	window.onload = function() {
+		var oMask = document.getElementById('mask');
+		var oGuide = document.getElementById('newguide');
+		var aStep = document.getElementsByClassName('step');
+		var aNext = oGuide.getElementsByTagName('a');
+		var aClose = oGuide.getElementsByTagName('span');
+
+		//读取cookie
+		var res = document.cookie.substring(5);
+		alert(res);
+
+		//如果没有cookie，执行以下
+		if(res!='www.helloruan.com') {
+			alert(res);
+
+			//mask 父框  第一步显示出来
+			oMask.style.display = oGuide.style.display = aStep[0].style.display = 'block';
+
+			//下一步按钮
+			for(var i=0;i<aNext.length;i++) {
+				aNext[i].index = i; //为每一个按钮增加index属性，为后面引用的
+
+				aNext[i].onclick = function(){
+					this.parentNode.parentNode.style.display = 'none';
+					if(this.index<aNext.length-1) {
+						aStep[this.index+1].style.display = 'block';
+					} else if(this.index==aNext.length-1) {
+						oMask.style.display = oGuide.style.display = 'none';
+					}
+				}
+			}
+
+			//关闭按钮
+			for(var i=0;i<aClose.length;i++) {
+				aClose[i].onclick = function() {
+					oMask.style.display = oGuide.style.display = 'none';
+				}
+			}
+
+			//添加cookie
+			var oDate = new Date();
+			oDate.setDate(getDay()+30);
+			document.cookie = 'name=www.helloruan.com;expires=' + oDate;
+			}	
+
+		}
+
+		
+
+</script>
+
+</body>
+</html>
