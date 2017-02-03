@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JQuery实现自定义滚动条</title>
+<style type="text/css">
+	* {
+		padding: 0;
+		margin: 0;
+	}
+	ul, li {
+		list-style: none;
+	}
+	body {
+		background-color: #ccc; 
+	}
+	.scroll {
+		width: 540px;
+		border: 1px solid #e5e5e5;
+		background-color: #fff;
+		margin: 30px auto;
+	}
+	.tab {
+		height: 34px;
+		border-bottom: 1px solid #e5e5e5;
+		color: #666;
+		background-color: #f8f8f8;
+	}
+	.tab .tab-item {
+		float: left;
+		font: 14px/34px "Microsoft Yahei";
+		height: 34px;
+		text-align: center;
+		border-right: 1px solid #e5e5e5;
+		padding: 0 20px;
+	}
+	.tab .tab-active {
+		background-color: #fff;
+		color: #00be3c;
+		border-top: 2px solid #00be3c;
+		margin: -1px 0;
+	}
+	/*滚动内容区*/
+	.wrap {
+		position: relative;
+		width: 100%;
+		height: 300px;
+	}
+	.wrap .scroll-cont {
+		height: 100%;
+		padding: 0 15px;
+		overflow: hidden;
+	}
+	.wrap .scroll-cont h3 {
+		font: 16px/3 "Microsoft Yahei";
+		text-align: center;
+	}
+	.wrap .scroll-cont p {
+		font-size: 14px;
+		line-height: 20px;
+		text-indent: 2em;
+		margin-bottom: 10px;
+	}
+	/*滚动条*/
+	.wrap .scroll-bar {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 10px;
+		height: 100%;
+		background-color: #eaeaea;
+	}
+	.wrap .scroll-slider {
+		position: absolute;
+		top: 0;
+		left: 1px;
+		width: 8px;
+		height: 30px;
+		background-color: #fff;
+	}
+</style>
+</head>
+<body>
+	<div class="scroll">
+		<!-- 标签切换区 -->
+		<ul class="tab">
+			<li class="tab-item tab-active">第一篇</li>
+			<li class="tab-item">第二篇</li>
+			<li class="tab-item">第三篇</li>
+			<li class="tab-item">第四篇</li>
+		</ul>
+		<!-- 滚动内容区 -->
+		<div class="wrap">
+			<!-- 滚动内容 -->
+			<div class="scroll-cont">
+				<h3 class="anchor">第7集</h3>
+				<div class="ool">
+					<p>司音难以接受墨渊仙去的事实，她竟自取心头血保住墨渊的仙体。离怨蓝袍加身却因残暴犯了众怒，离镜收服翼族众人推翻离怨登上翼君之位。</p>
+					<p>素锦全族命丧若水唯留一名孤女，天君为孤女赐名素锦并交给央错夫妇抚养。司音向离镜借玉魂却被敷衍欺骗，挑起事端的玄女也因此遭到离镜的厌弃。央错夫妇前来昆仑虚告诫违背天命的司音，金莲与乐胥结缘化作金光进入乐胥体内。</p>
+					<p>昆仑虚众弟子共饮怀缅过往，司音灌醉师兄们后带着墨渊的仙体离去。</p>
+				</div>
+				<h3 class="anchor">第8集</h3>
+				<div class="ool">
+					<p>乐胥诞下夜华引来百鸟朝贺，天君即刻下旨立夜华为储君。司音带着师父的仙体回到青丘，她自此恢复了狐帝之女白浅浅的身份。</p>
+					<p>墨渊仙体失踪后昆仑虚弟子悉数散去，天君为此震怒幸得帝君从旁安抚。浅浅失去大半心头血以致气息微弱性命难保，狐族帝后拼死取回神芝草并渡了大半修为才得以帮浅浅续命。</p>
+					<p>浅浅回归途中曾救下一只小巴蛇少辛，不料少辛却叛主忘恩恋上了浅浅的未婚夫桑籍。少辛被桑籍带回了天宫，夜华发现后将事告知连宋处理。</p>
+				</div>
+				<h3 class="anchor">第9集</h3>
+				<div class="ool">
+					<p>03:16天出霞光百鸟贺 夜华降生立储君06:27路遇少辛受欺辱 浅浅施恩谋去处</p>
+					<p>11:10取心头血还师恩 气息微弱命难保16:05昆仑虚失主心骨 众徒离去奔前程</p>
+					<p>20:23夺神芝草渡修为 狐族帝后救浅浅33:42少辛叛主恋桑籍 背弃恩情欲私奔</p>
+				</div>
+				<h3 class="anchor">第10集</h3>
+				<div class="ool">
+					<p>07:50司音自取心头血 保墨渊仙体不腐11:13离怨残暴引众怒 离镜上位夺君权</p>
+					<p>17:00孤女族人命皆丧 天君怜惜封公主23:55金莲枯萎化金光 认主乐胥结良缘</p>
+					<p>28:11跪拜离镜借玉魂 却遭欺哄司音怒39:02浅浅拜别众师兄 私带墨渊悄离去</p>
+				</div>
+			</div>
+			<!-- 滚动条 -->
+			<div class="scroll-bar">
+				<div class="scroll-slider"></div>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+<script type="text/javascript">
+	var scroll = {};
+
+	(function(win,doc,$) {
+		function cusScrollBar(options) {
+			this._init(options);
+		}
+
+		$.extend(cusScrollBar.prototype,{
+			_init: function() {
+				console.log('test');
+			}
+		})
+		// cusScrollBar.prototype._init = function() {
+		// 	console.log('test');
+		// }
+		scroll.cusScrollBar = cusScrollBar;
+
+	})(window,document,jQuery);
+	new scroll.cusScrollBar();
+
+</script>
+
+</body>
+</html>
